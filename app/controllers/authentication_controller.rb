@@ -13,7 +13,8 @@ class AuthenticationController < ApplicationController
         password_hash: hashed,
         name: params[:name]
       )
-      grant_token(user.id)
+      token = grant_token(user.id)
+      set_header("access_token", token)
       render json: user
     else
       head 401
@@ -23,7 +24,8 @@ class AuthenticationController < ApplicationController
   def login
     user = User.find_by_email(params[:email])
     if user.password_hash == params[:password]
-      grant_token(user.id)
+      token = grant_token(user.id)
+      set_header("access_token", token)
       render json: user
     else
       head 401
