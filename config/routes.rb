@@ -1,4 +1,7 @@
 Jets.application.routes.draw do
+  resources :users
+  get 'authentication/register'
+  get 'authentication/login'
   root "jets/public#show"
 
   # The jets/public#show controller can serve static utf8 content out of the public folder.
