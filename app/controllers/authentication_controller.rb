@@ -15,20 +15,24 @@ class AuthenticationController < ApplicationController
       )
       token = grant_token(user.id)
       set_header("access_token", token)
-      render json: user
+      render json: UserSerializer.new(
+        user
+      ), status: :ok
     else
-      head 401
+      render json: { "mesage": "Invalid request" }, status: 401
     end
   end
 
   def login
     user = User.find_by_email(params[:email])
-    if user.password_hash == params[:password]
+    if BCrypt::Password.new(user.password_hash) == params[:password]
       token = grant_token(user.id)
       set_header("access_token", token)
-      render json: user
+      render json: UserSerializer.new(
+        user
+      ), status: :ok
     else
-      head 401
+      render json: { "mesage": "Invalid request" }, status: 401
     end
   end
 
