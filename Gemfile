@@ -11,6 +11,7 @@ gem "dynomite"
 gem "bcrypt"
 gem "jwt"
 gem "active_model_serializers"
+gem "awesome_print"
 
 # development and test groups are not bundled as part of the deployment
 group :development, :test do
